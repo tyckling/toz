@@ -1,0 +1,3 @@
+
+void setupTriangle();
+void draw();

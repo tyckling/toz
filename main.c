@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "GL/glew.h"
 #include "SDL2/SDL_opengl.h"
+#include "gl.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -20,7 +21,8 @@ void initGL()
 
 	glewExperimental = GL_TRUE;
 	glewInit();
-
+	
+	setupTriangle();
 }
 
 int main(int argc, char* argv[])
@@ -83,9 +85,8 @@ int main(int argc, char* argv[])
 
 		// Graphics update here
 		glClearColor(r, g, b, 1.0f);
-
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		draw();
 		SDL_GL_SwapWindow(gWindow);
 		//SDL_Delay(64);
 		

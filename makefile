@@ -1,4 +1,4 @@
-SOURCES = main.c 
+SOURCES = main.c gl.c
 
 INCLUDE = -I/usr/include/SDL2 -I/usr/include/GL
 
