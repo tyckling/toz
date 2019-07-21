@@ -52,8 +52,6 @@ int main(int argc, char* argv[])
 
 	SDL_Event sdlEvent;
 
-	GLfloat r = 0.0f, g = 0.0f, b = 0.0f;
-
 	while(!quit)
 	{
 		while(SDL_PollEvent(&sdlEvent) != 0)
@@ -67,25 +65,7 @@ int main(int argc, char* argv[])
 			}
 		}
 
-		if(r >= 1.0f)
-		{
-			r = 0.0f;
-			g += 0.05f;
-		}
-		if(g >= 1.0f)
-		{
-			g = 0.0f;
-			b += 0.05f;
-		}
-		if(b >= 1.0f)
-		{
-			b = 0.0f;
-		}
-		r += 0.05f;
-
 		// Graphics update here
-		glClearColor(r, g, b, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
 		draw();
 		SDL_GL_SwapWindow(gWindow);
 		//SDL_Delay(64);
