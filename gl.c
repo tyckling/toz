@@ -15,7 +15,7 @@ static const GLfloat gVertexBufferData[] = {
 GLuint vertexBuffer;
 
 GLuint LoadShaders(const char*, const char*);
-int readFile(char*, int size, const char*);
+int readFile(char**, const char*);
 
 void setupTriangle()
 {
@@ -49,27 +49,33 @@ GLuint LoadShaders(const char* vertexFilePath, const char* fragmentFilePath)
 	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-	char vertexBuffer[255], fragmentBuffer[255];
+	char *vertexBuffer, *fragmentBuffer;
 
-	if(!readFile(vertexBuffer, sizeof(vertexBuffer), vertexFilePath))
+	if(!readFile(&vertexBuffer, vertexFilePath))
 		return 0;
-	if(!readFile(fragmentBuffer, sizeof(fragmentBuffer), fragmentFilePath))
+	if(!readFile(&fragmentBuffer, fragmentFilePath))
 		return 0;
 	
-	printf("%s", vertexBuffer);
-	printf("%s", fragmentBuffer);
-	
+	free(vertexBuffer);
+	free(fragmentBuffer);
 	return 0;
 }
 
-int readFile(char* buffer, int size, const char* filePath)
+int readFile(char** buffer, const char* filePath)
 {
 	int ret = 1;
 
 	FILE* file = fopen(filePath, "r");
 	if(file)
 	{
-		long fsize = fread(buffer, 1, size, file);
+		fseek(file, 0, SEEK_END);
+		long fsize = ftell(file);
+		fseek(file, 0, SEEK_SET);
+
+		*buffer = (char*)malloc(fsize + 1);
+		printf("%li\n", sizeof(&buffer));
+
+		fread(*buffer, 1, fsize, file);
 
 		if(ferror(file))
 		{
